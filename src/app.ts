@@ -1,5 +1,6 @@
 import * as path from 'path';
 import * as express from 'express';
+import * as cors from 'cors';
 // import * as logger from 'morgan';
 import * as bodyParser from 'body-parser';
 import messageRoutes from './api/channel.api';
@@ -19,16 +20,14 @@ class App {
 
     // Configure Express middleware.
     private middleware(): void {
-        // this.express.use(logger('dev'));
+        // ENABLING ALL CORS, note not for production
+        this.express.use(cors());
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({ extended: false }));
     }
 
     // Configure API endpoints.
     private routes(): void {
-        /* This is just to get up and running, and to make sure what we've got is
-         * working so far. This function will change when we start to add more
-         * API endpoints */
         const router = express.Router();
         // placeholder route handler
         router.get('/', (req, res, next) => {

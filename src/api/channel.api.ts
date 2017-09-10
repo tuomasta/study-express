@@ -22,12 +22,21 @@ export class ChannelApi {
    */
   public getChannelMessages(req: Request, res: Response, next: NextFunction) {
     const channel = req.params.channel;
-    const channelMessages = this.messages.get(channel) || [];
-    res.send([{
+    let channelMessages = [{
       sender: 'chatbot',
       text: `Hello there, welcome to @${channel}`,
     },
-    ...channelMessages]);
+    ...this.messages.get(channel) || [],
+    ];
+
+    // TODO should use dates
+    const toIndex = Math.min(+req.query.toIndex || Number.MAX_VALUE, channelMessages.length);
+    const fromIndex = Math.min(+req.query.fromIndex || 0, toIndex);
+
+    // if user specifies a filter then return only that part
+    channelMessages = channelMessages.slice(fromIndex, toIndex);
+
+    res.send(channelMessages);
   }
 
   /**
