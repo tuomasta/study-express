@@ -11,7 +11,7 @@ export class ChannelApi {
   private messages: Map<string, IMessage[]> = new Map<string, IMessage[]>();
 
   /**
-   * Initialize the MessageApi
+   * Initialize the ChannelApi
    */
   constructor() {
     this.router = Router();
@@ -68,7 +68,7 @@ export class ChannelApi {
   }
 }
 
-// Create the HeroRouter, and export its configured Express.Router
-const heroRoutes = new ChannelApi();
+// Create the ChannelApi, and export its configured Express.Router
+const channelApi = new ChannelApi();
 
-export default heroRoutes.initRoutes();
+export default channelApi.initRoutes();

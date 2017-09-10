@@ -1,7 +1,6 @@
 import * as path from 'path';
 import * as express from 'express';
 import * as cors from 'cors';
-// import * as logger from 'morgan';
 import * as bodyParser from 'body-parser';
 import messageRoutes from './api/channel.api';
 
@@ -30,7 +29,7 @@ class App {
     private routes(): void {
         const router = express.Router();
         // placeholder route handler
-        router.get('/', (req, res, next) => {
+        router.get('/health-check', (req, res, next) => {
             res.json({
                 message: 'API works',
             });
