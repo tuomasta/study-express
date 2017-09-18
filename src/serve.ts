@@ -8,8 +8,10 @@ const port = 4200;
 App.set('port', port);
 
 const server = http.createServer(App);
-server.listen(port);
 server.on('error', onError);
+server.listen(port, () => {
+    console.log(`Server running at localhost:${port} `);
+});
 
 function onError(error: NodeJS.ErrnoException): void {
     if (error.syscall !== 'listen') throw error;

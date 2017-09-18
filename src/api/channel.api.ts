@@ -1,4 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
+import { IRouteDefinition } from '../interfaces/route-definition.interface';
 
 interface IMessage {
   sender: string;
@@ -61,14 +62,16 @@ export class ChannelApi {
    * Take each handler, and attach to one of the Express.Router's
    * endpoints.
    */
-  public initRoutes(): Router {
+  public initRoutes(): IRouteDefinition {
     this.router.get('/:channel/messages', this.getChannelMessages.bind(this));
     this.router.post('/:channel/messages', this.createMessages.bind(this));
-    return this.router;
+    return {
+      baseUri: '/api/v1/channel',
+      router: this.router,
+    };
   }
 }
 
 // Create the ChannelApi, and export its configured Express.Router
-const channelApi = new ChannelApi();
 
-export default channelApi.initRoutes();
+export const channelApi = new ChannelApi().initRoutes();

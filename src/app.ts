@@ -2,8 +2,7 @@ import * as path from 'path';
 import * as express from 'express';
 import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
-import messageRoutes from './api/channel.api';
-
+import routeDefintions from './routes';
 // Creates and configures an ExpressJS web server.
 class App {
 
@@ -27,15 +26,9 @@ class App {
 
     // Configure API endpoints.
     private routes(): void {
-        const router = express.Router();
-        // placeholder route handler
-        router.get('/health-check', (req, res, next) => {
-            res.json({
-                message: 'API works',
-            });
+        routeDefintions.forEach(r => {
+            this.express.use(r.baseUri, r.router);
         });
-        this.express.use('/', router);
-        this.express.use('/api/v1/channel', messageRoutes);
     }
 
 }
