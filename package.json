@@ -10,7 +10,12 @@
     "compile": "tsc -p tsconfig.json",
     "compile:watch": "npm run compile --silent -- --watch",
     "serve": "node dist/serve.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "predocker:build": "npm run compile",
+    "docker:remove": "docker rmi -f study-express-api",
+    "docker:build": "docker build . -t study-express-api",
+    "predocker:run": "npm run docker:build",
+    "docker:run": "docker run -d -p 4200:4200 study-express-api"
   },
   "keywords": [
     "rest",
