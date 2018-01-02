@@ -2,14 +2,19 @@
   "name": "study-express-api",
   "version": "1.0.0",
   "description": "Studying express node api by building a messaging service",
-  "main": "index.js",
+  "repository": { 
+  },
   "scripts": {
+    "clean": "rimraf dist",
+    "prebundle": "npm run clean && npm run compile",
+    "bundle": "rollup -c",
     "start": "npm-run-all --parallel --silent compile:watch lint:watch",
     "lint": "tslint -p tsconfig.json",
     "lint:watch": "watch \"npm run lint --silent -- --force\" src",
     "compile": "tsc -p tsconfig.json",
     "compile:watch": "npm run compile --silent -- --watch",
     "serve": "node dist/serve.js",
+    "serve:bundle": "node dist/bundle.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "predocker:build": "npm run compile",
     "docker:remove": "docker rmi -f study-express-api",
@@ -29,6 +34,11 @@
     "@types/express": "^4.0.37",
     "@types/node": "^8.0.28",
     "npm-run-all": "^4.1.1",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.53.2",
+    "rollup-plugin-commonjs": "^8.2.6",
+    "rollup-plugin-json": "^2.3.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
     "tslint": "^5.7.0",
     "typescript": "^2.5.2",
     "watch": "^1.0.2"
@@ -38,6 +48,7 @@
     "body-parser": "^1.18.0",
     "cors": "^2.8.4",
     "debug": "^3.0.1",
-    "express": "^4.15.4"
+    "express": "^4.15.4",
+    "mongoose": "^5.0.0-rc0"
   }
 }
