@@ -8,8 +8,18 @@ export default {
         file: 'dist/bundle.js',
         format: 'cjs'
     },
+    onwarn(warning) {
+        // skip certain warnings
+        if (warning.code === 'UNRESOLVED_IMPORT' ||
+            warning.code === 'EVAL') return;
+      
+        // console.warn everything else
+        console.warn(warning.message, warning.code);
+    }, 
 	plugins: [
-        resolve(),
+        resolve({
+            preferBuiltins: true
+        }),
         commonjs({
             include: ['node_modules/**', 'dist/**'],
         }),

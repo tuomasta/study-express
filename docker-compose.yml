@@ -1,9 +1,20 @@
 # docker-compose.yml file version
-version: '3'
+version: '2'
 services:
+  api:
+    build: ./
+    ports: 
+      - "4200:4200"
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
   mongodb:
     image: mongo:latest
     volumes:
-      - mongodata:/data/db 
-volumes:
-  mongodata:
+     - ~/data/study-express:/data/db
+
+#    volumes:
+#      - mongodata:/data/db 
+#volumes:
+#  mongodata:
