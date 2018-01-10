@@ -1,10 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { IRouteDefinition } from '../interfaces/route-definition.interface';
-
-interface IMessage {
-  sender: string;
-  text: string;
-}
+import { IMessage } from '../models/message';
 
 export class ChannelApi {
   private router: Router;
