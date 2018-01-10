@@ -1,12 +1,9 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { IRouteDefinition } from '../interfaces/route-definition.interface';
-import { IMessage } from '../models/message';
+import { Message } from '../models/message';
 
 export class ChannelApi {
   private router: Router;
-
-  private messages: Map<string, IMessage[]> = new Map<string, IMessage[]>();
-
   /**
    * Initialize the ChannelApi
    */
@@ -19,21 +16,25 @@ export class ChannelApi {
    */
   public getChannelMessages(req: Request, res: Response, next: NextFunction) {
     const channel = req.params.channel;
-    let channelMessages = [{
-      sender: 'chatbot',
-      text: `Hello there, welcome to @${channel}`,
-    },
-    ...this.messages.get(channel) || [],
-    ];
 
-    // TODO should use dates
-    const toIndex = Math.min(+req.query.toIndex || Number.MAX_VALUE, channelMessages.length);
-    const fromIndex = Math.min(+req.query.fromIndex || 0, toIndex);
+    Message.findByChannel(channel).then(messages => {
+      const toDate = req.query.toDate;
+      const fromDate = req.query.fromIndex;
 
-    // if user specifies a filter then return only that part
-    channelMessages = channelMessages.slice(fromIndex, toIndex);
+      // TODO there should be actually channel api which does this on join
+      let channelMessages = [{
+        created: Date.now(),
+        sender: 'chatbot',
+        text: `Hello there, welcome to @${channel}`,
+        },
+        ...messages,
+      ];
 
-    res.send(channelMessages);
+      if (fromDate) channelMessages = channelMessages.filter(m => m.created > fromDate);
+      if (toDate) channelMessages = channelMessages.filter(m => m.created < toDate);
+
+      res.send(channelMessages);
+    });
   }
 
   /**
@@ -41,17 +42,15 @@ export class ChannelApi {
    */
   public createMessages(req: Request, res: Response, next: NextFunction) {
     const channel = req.params.channel;
-    const message = req.body;
+    const message = new Message(req.body);
 
+    // TODO better validation
     if (!channel || !message) {
       res.status(400).send(`invalid message posted ${channel}, ${JSON.stringify(message)}`);
       return;
     }
 
-    if (!this.messages.has(channel)) this.messages.set(channel, []);
-    this.messages.get(channel).push(message);
-
-    res.status(201).send();
+    message.save().then(() => res.status(201).send());
   }
 
   /**

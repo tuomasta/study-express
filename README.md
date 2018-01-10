@@ -7,7 +7,7 @@ NPM
 npm install
 npm start
 in another console npm run serve
-or start debugger in vscode or run npm
+or start debugger in vscode
 ```
 
 DOCKER
