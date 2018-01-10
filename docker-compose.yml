@@ -11,10 +11,12 @@ services:
       - mongodb
   mongodb:
     image: mongo:latest
+    ports: 
+     - "27017:27017"
     volumes:
-     - ~/data/study-express:/data/db
+     - mongodata:/data/db 
+volumes:
+ mongodata:
 
-#    volumes:
-#      - mongodata:/data/db 
-#volumes:
-#  mongodata:
+    # volumes:
+    #  - ~/data/study-express:/data/db
