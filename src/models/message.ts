@@ -14,6 +14,7 @@ interface IMessageFunctions {
 }
 
 const messageSchema: Schema = new Schema({
+    channel: String,
     created: Date,
     text: String,
     sender: String,
@@ -29,7 +30,12 @@ messageSchema.pre('save', function(next) {
 
 // method to find messages by channel
 messageSchema.static('findByChannel',
-    (channel: string) => Message.find({channel}));
+    (channel: string) => {
+        const findby = {
+            channel,
+        };
+        return Message.find(findby);
+    });
 
 export type IMessageModel = Model<IMessage> & IMessageFunctions;
 

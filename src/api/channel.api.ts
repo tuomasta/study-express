@@ -43,14 +43,16 @@ export class ChannelApi {
   public createMessages(req: Request, res: Response, next: NextFunction) {
     const channel = req.params.channel;
     const message = new Message(req.body);
-
     // TODO better validation
     if (!channel || !message) {
       res.status(400).send(`invalid message posted ${channel}, ${JSON.stringify(message)}`);
       return;
     }
 
-    message.save().then(() => res.status(201).send());
+    message.channel = channel;
+    message.save().then(
+      () => res.status(201).send(),
+      reason => res.status(400).send(reason));
   }
 
   /**
