@@ -1,0 +1,32 @@
+# docker-compose.yml file version
+version: '2'
+services:
+  api:
+    image: message-api:latest
+    container_name: message-api
+    build: 
+      context: .
+      dockerfile: .docker/prod.dockerfile
+    ports: 
+      - "4201:4200"
+    networks: 
+      - messages-network
+    depends_on:
+      - mongodb
+  mongodb:
+    container_name: message-db-mongo
+    image: mongo:latest
+    networks: 
+      - messages-network
+    ports: 
+     - "27018:27017"
+    volumes:
+     - mongodata:/data/db 
+volumes:
+ mongodata:
+networks: 
+  messages-network:
+    driver: bridge
+
+    # volumes:
+    #  - ~/data/study-express:/data/db
