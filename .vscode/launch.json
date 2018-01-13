@@ -5,6 +5,19 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "node",
+            "request": "attach",
+            "name": "Docker: Attach to Api",
+            "port": 5858,
+            "protocol": "inspector",
+            "restart": true,
+            "localRoot": "${workspaceRoot}",
+            "remoteRoot": "/var/www/api",
+            "outFiles": [
+                "${workspaceRoot}/dist/**/*.js"
+            ]
+        },
+        {
         "type": "node",
         "request": "launch",
         "name": "Launch Program",

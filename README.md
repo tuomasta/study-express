@@ -1,19 +1,22 @@
 # study-express
 This is my study project for node / express api
 
-## To launch
-NPM
+## Develop
+Run following command to run the api inside a docker container.
 ```
 npm install
-npm start
-in another console npm run serve
-or start debugger in vscode
+sudo npm start
 ```
 
-DOCKER
+In development mode you can:
+* Use TVCode Docker: Attach to Api to debug the api.
+* Modified source codes are automatically linted, recompiled and the api is updated.
+
+## Deploy production
+Note: sample only
 ```
-docker build -t api .
-docker run -p 4200:4200 api
+npm install
+sudo npm run compose:prod
 ```
 
 ## API

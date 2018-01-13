@@ -2,18 +2,13 @@
 version: '2'
 services:
   api:
-    image: message-api:dev-latest
+    image: message-api:latest
     container_name: message-api
     build: 
       context: .
-      dockerfile: .docker/dev.dockerfile
-    environment:
-      - NODE_ENV=development
-    volumes:
-      - .:/var/www/api
+      dockerfile: .docker/prod.dockerfile
     ports: 
       - "4201:4200"
-      - "5858:5858" # debug port for vscode
     networks: 
       - messages-network
     depends_on:
@@ -26,7 +21,7 @@ services:
     ports: 
      - "27018:27017"
     volumes:
-     - mongodata:/data/db
+     - mongodata:/data/db 
 volumes:
  mongodata:
 networks: 

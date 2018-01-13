@@ -5,7 +5,7 @@ import * as bodyParser from 'body-parser';
 import * as mongoose from 'mongoose';
 import routeDefintions from './routes';
 
-const MONGODB_CONNECTION: string = 'mongodb://localhost:27017/';
+const MONGODB_CONNECTION: string = 'mongodb://mongodb/messages';
 
 // Creates and configures an ExpressJS web server.
 class App {
