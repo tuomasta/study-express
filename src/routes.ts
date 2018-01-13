@@ -1,10 +1,16 @@
 import { IRouteDefinition } from './interfaces/route-definition.interface';
-import { healtCheckApi } from './api/health-check.api';
-import { channelApi } from './api/channel.api';
+import { HealthCheckApi } from './api/health-check.api';
+import { ChannelApi } from './api/channel.api';
+import { MessageRepository } from './repositories/message.repository';
+import { Router } from 'express';
+
+const messageRepo = new MessageRepository();
+const channelApi = new ChannelApi(messageRepo, Router());
+const healthCheckApi = new HealthCheckApi(Router());
 
 const routeDefinitions: IRouteDefinition[] = [
-    healtCheckApi,
-    channelApi,
+    healthCheckApi.initRoutes(),
+    channelApi.initRoutes(),
 ];
 
 export default routeDefinitions;

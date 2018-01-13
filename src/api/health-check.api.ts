@@ -2,8 +2,9 @@
 import { NextFunction, Response, Request, Router } from 'express';
 import { IRouteDefinition } from '../interfaces/route-definition.interface';
 
-class HealthCheckApi {
-    private router: Router = Router();
+export class HealthCheckApi {
+    constructor(private router: Router) {
+    }
 
     public get(req: Request, res: Response, next: NextFunction) {
         return res.json({
@@ -23,5 +24,3 @@ class HealthCheckApi {
         };
     }
 }
-
-export const healtCheckApi = new HealthCheckApi().initRoutes();

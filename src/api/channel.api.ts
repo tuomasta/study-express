@@ -1,14 +1,13 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { IRouteDefinition } from '../interfaces/route-definition.interface';
-import { Message } from '../models/message';
+import { IMessage } from '../interfaces/message.interface';
+import { MessageRepository } from '../repositories/message.repository';
 
 export class ChannelApi {
-  private router: Router;
   /**
    * Initialize the ChannelApi
    */
-  constructor() {
-    this.router = Router();
+  constructor(private messageRepo: MessageRepository, private router: Router) {
   }
 
   /**
@@ -17,7 +16,7 @@ export class ChannelApi {
   public getChannelMessages(req: Request, res: Response, next: NextFunction) {
     const channel = req.params.channel;
 
-    Message.findByChannel(channel).then(messages => {
+    this.messageRepo.findMessageByChannel(channel).then(messages => {
       const toDate = req.query.toDate;
       const fromDate = req.query.fromIndex;
 
@@ -42,7 +41,7 @@ export class ChannelApi {
    */
   public createMessages(req: Request, res: Response, next: NextFunction) {
     const channel = req.params.channel;
-    const message = new Message(req.body);
+    const message = req.body as IMessage;
     // TODO better validation
     if (!channel || !message) {
       res.status(400).send(`invalid message posted ${channel}, ${JSON.stringify(message)}`);
@@ -50,7 +49,7 @@ export class ChannelApi {
     }
 
     message.channel = channel;
-    message.save().then(
+    this.messageRepo.save(message).then(
       () => res.status(201).send(),
       reason => res.status(400).send(reason));
   }
@@ -68,7 +67,3 @@ export class ChannelApi {
     };
   }
 }
-
-// Create the ChannelApi, and export its configured Express.Router
-
-export const channelApi = new ChannelApi().initRoutes();
