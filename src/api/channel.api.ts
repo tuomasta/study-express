@@ -25,7 +25,7 @@ export class ChannelApi {
       let channelMessages = [{
         created: Date.now(),
         sender: 'chatbot',
-        text: `Hello there, welcome to @${channel}`,
+        text: `Hello you, welcome to @${channel}`,
         },
         ...messages,
       ];
