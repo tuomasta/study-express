@@ -17,6 +17,7 @@ const messageSchema: Schema = new Schema({
     created: Date,
     text: String,
     sender: String,
+    channel: String,
     id: String,
 });
 
