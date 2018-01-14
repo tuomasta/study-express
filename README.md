@@ -9,7 +9,7 @@ sudo npm start
 ```
 
 In development mode you can:
-* Use TVCode Docker: Attach to Api to debug the api.
+* Use VSCode Debugger *Docker: Attach to Api* to debug the api.
 * Modified source codes are automatically linted, recompiled and the api is updated.
 
 ## Deploy production
