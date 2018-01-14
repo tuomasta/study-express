@@ -26,11 +26,11 @@ GET:
 returns status of the service
 
 GET:
-**[host]/api/v1/channel/<id>/messages**
+**[host]/api/v1/channel/[id]/messages**
 
 Returns all messages of the channel
 
 POST:
-**[host]/api/v1/channel/<id>/messages**
+**[host]/api/v1/channel/[id]/messages**
 
 Creates new message to the channel
